@@ -19,8 +19,8 @@ public class ItemEntity {
 
     private String imageUrl;
 
-    @Column(name = "min_price_wanted", nullable = false)
-    private Integer minPrice;
+    @Column(nullable = false)
+    private Integer minPriceWanted;
 
     private String status;
 

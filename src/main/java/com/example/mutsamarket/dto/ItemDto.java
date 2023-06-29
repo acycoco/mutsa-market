@@ -10,7 +10,7 @@ public class ItemDto {
     private String title;
     private String description;
     private String imageUrl;
-    private Integer minPrice;
+    private Integer minPriceWanted;
     private String status;
     private String writer;
     private String password;
@@ -20,7 +20,7 @@ public class ItemDto {
         dto.setTitle(entity.getTitle());
         dto.setDescription(entity.getDescription());
         dto.setImageUrl(entity.getImageUrl());
-        dto.setMinPrice(entity.getMinPrice());
+        dto.setMinPriceWanted(entity.getMinPriceWanted());
         dto.setStatus(entity.getStatus());
         dto.setWriter(entity.getWriter());
         dto.setPassword(entity.getPassword());

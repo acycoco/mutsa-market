@@ -1,6 +1,7 @@
 package com.example.mutsamarket.entity;
 
 import jakarta.persistence.*;
+import lombok.Builder;
 import lombok.Data;
 
 @Data

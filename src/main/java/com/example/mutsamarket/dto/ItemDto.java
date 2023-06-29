@@ -17,6 +17,7 @@ public class ItemDto {
 
     public static ItemDto fromEntity(ItemEntity entity){
         ItemDto dto = new ItemDto();
+        dto.setId(entity.getId());
         dto.setTitle(entity.getTitle());
         dto.setDescription(entity.getDescription());
         dto.setImageUrl(entity.getImageUrl());

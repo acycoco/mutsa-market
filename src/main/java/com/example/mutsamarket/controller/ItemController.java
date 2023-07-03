@@ -4,6 +4,7 @@ package com.example.mutsamarket.controller;
 import com.example.mutsamarket.dto.ItemDto;
 import com.example.mutsamarket.dto.ResponseDto;
 import com.example.mutsamarket.service.ItemService;
+import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 
@@ -24,7 +25,7 @@ public class ItemController {
     //물품 등록
     // POST /items
     @PostMapping
-    public ResponseEntity<ResponseDto> create(@RequestBody ItemDto dto) {
+    public ResponseEntity<ResponseDto> create(@Valid @RequestBody ItemDto dto) {
         this.service.addItem(dto);
         ResponseDto response = new ResponseDto();
         response.setMessage("등록이 완료되었습니다. ");

@@ -3,6 +3,7 @@ package com.example.mutsamarket.controller;
 import com.example.mutsamarket.dto.CommentDto;
 import com.example.mutsamarket.dto.ResponseDto;
 import com.example.mutsamarket.service.CommentService;
+import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.data.domain.Page;
@@ -21,7 +22,7 @@ public class CommentController {
     @PostMapping
     public ResponseEntity<ResponseDto> create(
             @PathVariable("itemId") Long itemId,
-            @RequestBody CommentDto commentDto
+            @Valid @RequestBody CommentDto commentDto
     ){
         this.service.createComment(itemId, commentDto);
         ResponseDto response = new ResponseDto();

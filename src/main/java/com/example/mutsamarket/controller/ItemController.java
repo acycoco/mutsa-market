@@ -8,6 +8,7 @@ import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 
 import org.springframework.data.domain.Page;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
@@ -23,45 +24,49 @@ public class ItemController {
     //물품 등록
     // POST /items
     @PostMapping
-    public ResponseDto create(@RequestBody ItemDto dto) {
+    public ResponseEntity<ResponseDto> create(@RequestBody ItemDto dto) {
         this.service.addItem(dto);
         ResponseDto response = new ResponseDto();
         response.setMessage("등록이 완료되었습니다. ");
 
-        return response;
+        return ResponseEntity
+                .ok(response);
     }
 
     //물품 전체 조회, 페이지 단위 조회
-    // TODO GET /items?page={page}&limit={limit}
+    // GET /items?page={page}&limit={limit}
     @GetMapping
-    public Page<ItemDto> readAll(
+    public ResponseEntity<Page<ItemDto>> readAll(
             @RequestParam(value = "page", defaultValue = "0") Integer page,
             @RequestParam(value = "limit", defaultValue = "20") Integer limit
     ){
-        return service.readAllItem(page, limit);
+        return ResponseEntity
+                .ok(service.readAllItem(page, limit));
     }
 
     // 물품 단일 조회
     // GET /items/{itemId}
     @GetMapping("/{itemId}")
-    public ItemDto read(@PathVariable("itemId") Long itemId){
-        return this.service.readItem(itemId);
+    public ResponseEntity<ItemDto> read(@PathVariable("itemId") Long itemId){
+        return ResponseEntity
+                .ok(this.service.readItem(itemId));
     }
 
     //물품 정보 수정
     // PUT /items/{itemId}
     @PutMapping("/{itemId}")
-    public ResponseDto update(@PathVariable("itemId") Long itemId, @RequestBody ItemDto itemDto){
+    public ResponseEntity<ResponseDto> update(@PathVariable("itemId") Long itemId, @RequestBody ItemDto itemDto){
         this.service.updateItem(itemId, itemDto);
         ResponseDto response = new ResponseDto();
         response.setMessage("물품이 수정되었습니다.");
-        return response;
+        return ResponseEntity
+                .ok(response);
     }
 
     //물품 이미지 수정
     //PUT /items/{itemId}/image
     @PutMapping("/{itemId}/image")
-    public ResponseDto updateImage(
+    public ResponseEntity<ResponseDto> updateImage(
             @PathVariable("itemId") Long itemId,
             @RequestParam("image") MultipartFile image,
             @RequestParam("writer") String writer,
@@ -70,16 +75,18 @@ public class ItemController {
         this.service.updateItemImage(itemId, image, writer, password);
         ResponseDto response = new ResponseDto();
         response.setMessage("이미지가 등록되었습니다.");
-        return response;
+        return ResponseEntity
+                .ok(response);
     }
     //물품 삭제
     // DELETE /items/{itemId}
     @DeleteMapping("/{itemId}")
-    public ResponseDto delete(@PathVariable("itemId") Long itemId, @RequestBody ItemDto itemDto){
+    public ResponseEntity<ResponseDto> delete(@PathVariable("itemId") Long itemId, @RequestBody ItemDto itemDto){
         this.service.deleteItem(itemId, itemDto);
         ResponseDto response = new ResponseDto();
         response.setMessage("물품을 삭제했습니다.");
-        return response;
+        return ResponseEntity
+                .ok(response);
     }
 
 }

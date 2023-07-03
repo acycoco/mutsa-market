@@ -29,7 +29,6 @@ public class ItemService {
 
 
     //물품 등록
-    //필수: 제목, 설명, 최소 가격, 작성자, 비밀번호
     public ItemDto addItem(ItemDto dto){
         ItemEntity entity = new ItemEntity();
         entity.setTitle(dto.getTitle());

@@ -4,14 +4,24 @@ import com.example.mutsamarket.dto.ItemDto;
 import com.example.mutsamarket.entity.ItemEntity;
 import com.example.mutsamarket.repository.ItemRepository;
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
+import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.server.ResponseStatusException;
 
+import java.io.IOException;
+import java.nio.file.Files;
+import java.nio.file.Path;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
+@Slf4j
 @Service
 @RequiredArgsConstructor
 public class ItemService {
@@ -36,13 +46,13 @@ public class ItemService {
     }
 
     //물품 전체 조회  페이지 단위 조회도 가능
-    public List<ItemDto> readAllItem() {
-        List<ItemEntity> itemEntityList = repository.findAll();
-        List<ItemDto> itemDtoList = new ArrayList<>();
-        for(ItemEntity entity: itemEntityList){
-            itemDtoList.add(ItemDto.fromEntity(entity));
-        }
-        return itemDtoList;
+    public Page<ItemDto> readAllItem(Integer pageNum, Integer pageSize) {
+
+        Pageable pageable = PageRequest.of(pageNum, pageSize, Sort.by("id").descending());
+        Page<ItemEntity> itemEntityList = repository.findAll(pageable);
+
+        Page<ItemDto> itemDtoPage = itemEntityList.map(ItemDto::fromEntity);
+        return itemDtoPage;
     }
     //물품 단일 조회
     public ItemDto readItem(Long id){
@@ -76,7 +86,43 @@ public class ItemService {
 
     // 이미지 첨부
     // 비밀번호 확인
+    public ItemDto updateItemImage(Long id, MultipartFile image, String writer, String password){
+        Optional<ItemEntity> optionalItem = repository.findById(id);
+        if (optionalItem.isEmpty()) throw new ResponseStatusException(HttpStatus.NOT_FOUND);
 
+        ItemEntity item = optionalItem.get();
+        //비밀번호 확인
+        if (!item.getPassword().equals(password))
+            throw new ResponseStatusException(HttpStatus.BAD_REQUEST);
+
+        //이미지 파일 저장하기
+        String imageDir = String.format("media/%d/",id);
+        try{
+            //디렉토리 생성
+            Files.createDirectories(Path.of(imageDir));
+        } catch (IOException e){
+            log.error(e.getMessage());
+            throw new ResponseStatusException(HttpStatus.INTERNAL_SERVER_ERROR);
+        }
+
+        String imageOriginalFilename = image.getOriginalFilename();
+        String[] imageFilenameSplit = imageOriginalFilename.split("\\.");
+        String extention = imageFilenameSplit[imageFilenameSplit.length - 1];
+        String imageFilename = "image." + extention;
+        String imagePath = imageDir + imageFilename;
+        log.info(imagePath);
+        try{
+            image.transferTo(Path.of(imagePath));
+
+        } catch (IOException e){
+            log.error(e.getMessage());
+            throw new ResponseStatusException(HttpStatus.INTERNAL_SERVER_ERROR);
+        }
+
+
+        item.setImageUrl(String.format("/static/%d/%s", id, imageFilename));
+        return ItemDto.fromEntity(repository.save(item));
+    }
 
     //물품 삭제
     public void deleteItem(Long id, ItemDto dto){

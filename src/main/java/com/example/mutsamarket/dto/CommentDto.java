@@ -6,7 +6,7 @@ import lombok.Data;
 @Data
 public class CommentDto {
     private Long id;
-    private Integer itemId;
+    private Long itemId;
     private String writer;
     private String password;
     private String content;

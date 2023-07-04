@@ -8,12 +8,16 @@ import lombok.Data;
 public class CommentDto {
     private Long id;
     private Long itemId;
+
     @NotBlank(message = "공백이거나 입력하지 않았습니다.")
     private String writer;
+
     @NotBlank(message = "공백이거나 입력하지 않았습니다.")
     private String password;
+
     @NotBlank(message = "공백이거나 입력하지 않았습니다.")
     private String content;
+
     private String reply;
 
     public static CommentDto fromEntity(CommentEntity entity){

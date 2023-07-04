@@ -1,26 +1,20 @@
 package com.example.mutsamarket.dto;
 
 
-import com.example.mutsamarket.entity.ItemEntity;
+import com.example.mutsamarket.entity.NegotiationEntity;
 import jakarta.validation.constraints.Min;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
 import lombok.Data;
 
 @Data
-public class ItemDto {
+public class NegotiationDto {
+
     private Long id;
-
-    @NotBlank(message = "공백이거나 입력하지 않았습니다.")
-    private String title;
-
-    @NotBlank(message = "공백이거나 입력하지 않았습니다.")
-    private String description;
-
-    private String imageUrl;
+    private Long itemId;
 
     @NotNull(message = "입력하지 않았습니다.") @Min(value = 0, message = "최소 0원이상이어야 합니다.")
-    private Integer minPriceWanted;
+    private Integer suggestedPrice;
 
     private String status;
 
@@ -30,13 +24,11 @@ public class ItemDto {
     @NotBlank(message = "공백이거나 입력하지 않았습니다.")
     private String password;
 
-    public static ItemDto fromEntity(ItemEntity entity){
-        ItemDto dto = new ItemDto();
+    public static NegotiationDto fromEntity(NegotiationEntity entity){
+        NegotiationDto dto = new NegotiationDto();
         dto.setId(entity.getId());
-        dto.setTitle(entity.getTitle());
-        dto.setDescription(entity.getDescription());
-        dto.setImageUrl(entity.getImageUrl());
-        dto.setMinPriceWanted(entity.getMinPriceWanted());
+        dto.setItemId(entity.getItemId());
+        dto.setSuggestedPrice(entity.getSuggestedPrice());
         dto.setStatus(entity.getStatus());
         dto.setWriter(entity.getWriter());
         dto.setPassword(entity.getPassword());

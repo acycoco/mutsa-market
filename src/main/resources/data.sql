@@ -1,6 +1,7 @@
 INSERT INTO sales_item (title, description, image_url, min_Price_Wanted, status, writer, password)
 VALUES
-    ('중고 맥북 팝니다', '2019년 맥북 프로 13인치 모델입니다', 'image1.jpg', 1000000, '판매중', 'Writer 1', 'password1'),
+    ('중고 맥북 팝니다', '2019년 맥북 프로 13인치 모델입니다', '', 1000000, '판매중', 'jeeho.dev', '1qaz2wsx'),
+    ('중고 맥북 팝니다', '2022년 맥북 프로 15인치 모델입니다', 'image1.jpg', 1000000, '판매중', 'Writer 1', 'password1'),
     ('게임용 그래픽카드 팝니다', 'GTX 1080 Ti 그래픽카드입니다', 'image2.jpg', 500000, '판매중', 'Writer 2', 'password2'),
     ('자전거 팝니다', '하이브리드 자전거입니다', 'image3.jpg', 200000, '판매중', 'Writer 3', 'password3'),
     ('노트북 배터리 팝니다', 'Dell XPS 15용 새로운 배터리입니다', 'image4.jpg', 100000, '판매중', 'Writer 4', 'password4'),

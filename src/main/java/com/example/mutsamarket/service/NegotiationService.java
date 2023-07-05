@@ -190,6 +190,7 @@ public class NegotiationService {
         //물품 상태 -> "판매 완료"
         ItemEntity item = optionalItem.get();
         item.setStatus("판매 완료");
+        itemRepository.save(item);
 
         //나머지 제안 상태 -> "거절"
         for(NegotiationEntity nego: negotiationRepository.findAllByItemId(itemId)){

@@ -48,7 +48,7 @@ public class CommentController {
     public ResponseEntity<ResponseDto> update(
             @PathVariable("itemId") Long itemId,
             @PathVariable("commentId") Long commentId,
-            @RequestBody CommentDto commentDto
+            @Valid @RequestBody CommentDto commentDto
     ){
         this.service.updateComment(itemId, commentId, commentDto);
         ResponseDto response = new ResponseDto();

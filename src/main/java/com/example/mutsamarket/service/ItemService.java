@@ -1,6 +1,7 @@
 package com.example.mutsamarket.service;
 
 import com.example.mutsamarket.dto.ItemDto;
+import com.example.mutsamarket.dto.ItemGetDto;
 import com.example.mutsamarket.entity.ItemEntity;
 import com.example.mutsamarket.repository.ItemRepository;
 import lombok.RequiredArgsConstructor;
@@ -45,22 +46,24 @@ public class ItemService {
     }
 
     //물품 전체 조회  페이지 단위 조회도 가능
-    public Page<ItemDto> readAllItem(Integer pageNum, Integer pageSize) {
+    //ItemGetDto로 반환 -> 작성자, 비밀번호 미표시
+    public Page<ItemGetDto> readAllItem(Integer pageNum, Integer pageSize) {
 
         Pageable pageable = PageRequest.of(pageNum, pageSize, Sort.by("id").descending());
         Page<ItemEntity> itemEntityList = repository.findAll(pageable);
 
-        Page<ItemDto> itemDtoPage = itemEntityList.map(ItemDto::fromEntity);
-        return itemDtoPage;
+        Page<ItemGetDto> itemGetDtoPage = itemEntityList.map(ItemGetDto::fromEntity);
+        return itemGetDtoPage;
     }
     //물품 단일 조회
-    public ItemDto readItem(Long id){
+    //ItemGetDto로 반환 -> 작성자, 비밀번호 미표시
+    public ItemGetDto readItem(Long id){
         Optional<ItemEntity> optionalItem = repository.findById(id);
 
         if (optionalItem.isEmpty()) throw new ResponseStatusException(HttpStatus.NOT_FOUND);
 
         ItemEntity item = optionalItem.get();
-        return ItemDto.fromEntity(item);
+        return ItemGetDto.fromEntity(item);
     }
 
     //물품 수정

@@ -62,6 +62,7 @@ public class CommentService {
         //해당 댓글이 해당 item의 댓글이 맞는지 확인
         if (!comment.getItemId().equals(itemId))
             throw new ResponseStatusException(HttpStatus.BAD_REQUEST);
+
         //댓글 비밀번호 확인
         if (!comment.getPassword().equals(dto.getPassword()))
             throw new ResponseStatusException(HttpStatus.BAD_REQUEST);

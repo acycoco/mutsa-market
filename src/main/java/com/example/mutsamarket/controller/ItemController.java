@@ -2,6 +2,7 @@ package com.example.mutsamarket.controller;
 
 
 import com.example.mutsamarket.dto.ItemDto;
+import com.example.mutsamarket.dto.ItemGetDto;
 import com.example.mutsamarket.dto.ResponseDto;
 import com.example.mutsamarket.service.ItemService;
 import jakarta.validation.Valid;
@@ -37,7 +38,7 @@ public class ItemController {
     //물품 전체 조회, 페이지 단위 조회
     // GET /items?page={page}&limit={limit}
     @GetMapping
-    public ResponseEntity<Page<ItemDto>> readAll(
+    public ResponseEntity<Page<ItemGetDto>> readAll(
             @RequestParam(value = "page", defaultValue = "0") Integer page,
             @RequestParam(value = "limit", defaultValue = "20") Integer limit
     ){
@@ -48,7 +49,7 @@ public class ItemController {
     // 물품 단일 조회
     // GET /items/{itemId}
     @GetMapping("/{itemId}")
-    public ResponseEntity<ItemDto> read(@PathVariable("itemId") Long itemId){
+    public ResponseEntity<ItemGetDto> read(@PathVariable("itemId") Long itemId){
         return ResponseEntity
                 .ok(this.service.readItem(itemId));
     }
@@ -56,7 +57,7 @@ public class ItemController {
     //물품 정보 수정
     // PUT /items/{itemId}
     @PutMapping("/{itemId}")
-    public ResponseEntity<ResponseDto> update(@PathVariable("itemId") Long itemId, @RequestBody ItemDto itemDto){
+    public ResponseEntity<ResponseDto> update(@PathVariable("itemId") Long itemId, @Valid @RequestBody ItemDto itemDto){
         this.service.updateItem(itemId, itemDto);
         ResponseDto response = new ResponseDto();
         response.setMessage("물품이 수정되었습니다.");

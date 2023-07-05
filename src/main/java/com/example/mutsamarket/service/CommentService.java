@@ -1,7 +1,6 @@
 package com.example.mutsamarket.service;
 
-import com.example.mutsamarket.dto.CommentDto;
-import com.example.mutsamarket.dto.CommentGetDto;
+import com.example.mutsamarket.dto.*;
 import com.example.mutsamarket.entity.CommentEntity;
 import com.example.mutsamarket.entity.ItemEntity;
 import com.example.mutsamarket.repository.CommentRepository;
@@ -75,7 +74,7 @@ public class CommentService {
     }
 
     //답글 수정 => 물품을 등록한사람(item)이 수정할 수 있음
-    public CommentDto updateCommentReply(Long itemId, Long commentId, CommentDto dto){
+    public CommentDto updateCommentReply(Long itemId, Long commentId, CommentReplyDto dto){
         Optional<CommentEntity> optionalComment = commentRepository.findById(commentId);
         //commentId가 존재하는지 확인
         if (optionalComment.isEmpty())
@@ -101,7 +100,7 @@ public class CommentService {
 
     //댓글 삭제
     //비밀번호 확인
-    public void deleteComment(Long itemId, Long commentId, CommentDto dto){
+    public void deleteComment(Long itemId, Long commentId, DeleteDto dto){
         Optional<CommentEntity> optionalComment = commentRepository.findById(commentId);
         //commentId가 존재하는지 확인
         if (optionalComment.isEmpty())

@@ -1,8 +1,6 @@
 package com.example.mutsamarket.controller;
 
-import com.example.mutsamarket.dto.CommentDto;
-import com.example.mutsamarket.dto.CommentGetDto;
-import com.example.mutsamarket.dto.ResponseDto;
+import com.example.mutsamarket.dto.*;
 import com.example.mutsamarket.service.CommentService;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
@@ -20,6 +18,7 @@ public class CommentController {
 
     //댓글 등록
     //POST /items/{itemId}/comments
+    //유효성 검증 CommentDto
     @PostMapping
     public ResponseEntity<ResponseDto> create(
             @PathVariable("itemId") Long itemId,
@@ -34,6 +33,7 @@ public class CommentController {
 
     //페이지 단위 댓글 조회
     //GET /items/{itemId}/comments
+    //반환값 Page<CommentGetDto>
     @GetMapping
     public ResponseEntity<Page<CommentGetDto>> readAll(
             @PathVariable("itemId") Long itemId,
@@ -45,6 +45,7 @@ public class CommentController {
     }
     //댓글 수정
     //PUT /items/{itemId}/comments/{commentId}
+    //유효성 검증 CommentDto
     @PutMapping("/{commentId}")
     public ResponseEntity<ResponseDto> update(
             @PathVariable("itemId") Long itemId,
@@ -61,13 +62,14 @@ public class CommentController {
 
     //답글 수정
     //PUT /items/{itemId}/comments/{commentId}/reply
+    //유효성 검증 CommentReplyDto
     @PutMapping("/{commentId}/reply")
     public ResponseEntity<ResponseDto> updateReply(
             @PathVariable("itemId") Long itemId,
             @PathVariable("commentId") Long commentId,
-            @RequestBody CommentDto commentDto
+            @Valid @RequestBody CommentReplyDto commentReplyDto
     ){
-        this.service.updateCommentReply(itemId, commentId, commentDto);
+        this.service.updateCommentReply(itemId, commentId, commentReplyDto);
         ResponseDto response = new ResponseDto();
         response.setMessage("댓글에 답변이 추가되었습니다.");
 
@@ -77,13 +79,14 @@ public class CommentController {
 
     //댓글 삭제
     //DELETE /items/{itemId}/comments/{commentId}
+    //유효성 검증 DeleteDto
     @DeleteMapping("/{commentId}")
     public ResponseEntity<ResponseDto> delete(
             @PathVariable("itemId") Long itemId,
             @PathVariable("commentId") Long commentId,
-            @RequestBody CommentDto commentDto
+            @Valid @RequestBody DeleteDto deleteDto
     ){
-        this.service.deleteComment(itemId, commentId, commentDto);
+        this.service.deleteComment(itemId, commentId, deleteDto);
         ResponseDto response = new ResponseDto();
         response.setMessage("댓글을 삭제했습니다.");
         return ResponseEntity

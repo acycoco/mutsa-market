@@ -1,7 +1,9 @@
 package com.example.mutsamarket.service;
 
+import com.example.mutsamarket.dto.DeleteDto;
 import com.example.mutsamarket.dto.NegotiationDto;
 import com.example.mutsamarket.dto.NegotiationGetDto;
+import com.example.mutsamarket.dto.NegotiationStatusDto;
 import com.example.mutsamarket.entity.ItemEntity;
 import com.example.mutsamarket.entity.NegotiationEntity;
 import com.example.mutsamarket.repository.ItemRepository;
@@ -78,7 +80,6 @@ public class NegotiationService {
 
 
 
-
     //구매제안 수정
     //작성자, 비밀번호 확인
     public NegotiationDto updateProposal(Long itemId, Long proposalId, NegotiationDto dto){
@@ -102,7 +103,7 @@ public class NegotiationService {
 
     //구매제안 삭제
     //작성자, 비밀번호 확인
-    public void deleteProposal(Long itemId, Long proposalId, NegotiationDto dto){
+    public void deleteProposal(Long itemId, Long proposalId, DeleteDto dto){
         //NegotiationEntity확인
         Optional<NegotiationEntity> optionalNegotiation = negotiationRepository.findById(proposalId);
         if (optionalNegotiation.isEmpty())
@@ -123,7 +124,9 @@ public class NegotiationService {
     //구매제안 수락
     //작성자, 비밀번호 확인
     // 상태 -> "수락" || "거절"
-    public NegotiationDto acceptOrRejectProposal(Long itemId, Long proposalId, NegotiationDto dto){
+    public NegotiationDto acceptOrRejectProposal(Long itemId, Long proposalId, NegotiationStatusDto dto){
+        if (!dto.getStatus().equals("수락") && !dto.getStatus().equals("거절"))
+            throw new ResponseStatusException(HttpStatus.BAD_REQUEST);
         //NegotiationEntity확인
         Optional<NegotiationEntity> optionalNegotiation = negotiationRepository.findById(proposalId);
         if (optionalNegotiation.isEmpty())
@@ -156,7 +159,7 @@ public class NegotiationService {
     // 제안 상태 -> "확정"
     // 물품 상태 -> "판매 완료"
     // 나머지 구매제안 -> "거절"
-    public NegotiationDto confirmProposal(Long itemId, Long proposalId, NegotiationDto dto){
+    public NegotiationDto confirmProposal(Long itemId, Long proposalId, NegotiationStatusDto dto){
         //NegotiationEntity확인
         Optional<NegotiationEntity> optionalNegotiation = negotiationRepository.findById(proposalId);
         if (optionalNegotiation.isEmpty())

@@ -1,8 +1,6 @@
 package com.example.mutsamarket.controller;
 
-import com.example.mutsamarket.dto.NegotiationDto;
-import com.example.mutsamarket.dto.NegotiationGetDto;
-import com.example.mutsamarket.dto.ResponseDto;
+import com.example.mutsamarket.dto.*;
 import com.example.mutsamarket.service.NegotiationService;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
@@ -20,10 +18,11 @@ public class NegotiationController {
 
     //구매제안 등록
     //POST /items/{itemId}/proposals
+    //유효성 검증 NegotiationDto
     @PostMapping
     public ResponseEntity<ResponseDto> create(
             @PathVariable("itemId") Long itemId, @Valid @RequestBody NegotiationDto negotiationDto
-    ){
+    ) {
         this.service.createProposal(itemId, negotiationDto);
         ResponseDto response = new ResponseDto();
         response.setMessage("구매 제안이 등록되었습니다.");
@@ -33,6 +32,7 @@ public class NegotiationController {
 
     //구매제안 조회
     //GET /items/{itemId}/proposals?writer=jeeho.edu&password=qwerty1234&page=1
+    //반환값 Page<NegotiationGetDto>
     @GetMapping
     public ResponseEntity<Page<NegotiationGetDto>> readAll(
             @PathVariable("itemId") Long itemId,
@@ -40,30 +40,59 @@ public class NegotiationController {
             @RequestParam("password") String password,
             @RequestParam(value = "page", defaultValue = "0") Integer page,
             @RequestParam(value = "limit", defaultValue = "20") Integer limit
-    ){
+    ) {
         return ResponseEntity
                 .ok(this.service.readAllProposal(itemId, writer, password, page, limit));
     }
 
-    //구매제안 수정 or 구매제안 수락 &거절 or 구매제안 확정
+    //구매제안 수정
     //PUT /items/{itemId}/proposals/{proposalId}
+    //유효성 검증 NegotiationDto
     @PutMapping("/{proposalId}")
     public ResponseEntity<ResponseDto> update(
             @PathVariable("itemId") Long itemId,
             @PathVariable("proposalId") Long proposalId,
-            @RequestBody NegotiationDto negotiationDto
-    ){
+            @Valid @RequestBody NegotiationDto negotiationDto
+    ) {
         // 제안 수정
-        if (negotiationDto.getStatus() == null){
-            this.service.updateProposal(itemId, proposalId, negotiationDto);
-            ResponseDto response = new ResponseDto();
-            response.setMessage("제안이 수정되었습니다.");
-            return ResponseEntity
-                    .ok(response);
-        }
+        this.service.updateProposal(itemId, proposalId, negotiationDto);
+        ResponseDto response = new ResponseDto();
+        response.setMessage("제안이 수정되었습니다.");
+        return ResponseEntity
+                .ok(response);
+
+
+    }
+
+    //구매제안 삭제
+    //DELETE /items/{itemId}/proposals/{proposalId}
+    //유효성 검증 DeleteDto
+    @DeleteMapping("/{proposalId}")
+    public ResponseEntity<ResponseDto> delete(
+            @PathVariable("itemId") Long itemId,
+            @PathVariable("proposalId") Long proposalId,
+            @Valid @RequestBody DeleteDto deleteDto
+    ) {
+        this.service.deleteProposal(itemId, proposalId, deleteDto);
+        ResponseDto response = new ResponseDto();
+        response.setMessage("제안을 삭제했습니다.");
+        return ResponseEntity
+                .ok(response);
+    }
+
+    //구매 제안 수락 or 거절 , 확정
+    //PUT /items/{itemId}/proposals/{proposalId}/status
+    //유효성 검증 NegotiationStatusDto
+    @PutMapping("/{proposalId}/status")
+    public ResponseEntity<ResponseDto> updateStatus(
+            @PathVariable("itemId") Long itemId,
+            @PathVariable("proposalId") Long proposalId,
+            @Valid @RequestBody NegotiationStatusDto negotiationStatusDto
+    ) {
+
         // 구매 확정
-        else if (negotiationDto.getStatus().equals("확정")){
-            this.service.confirmProposal(itemId, proposalId, negotiationDto);
+        if (negotiationStatusDto.getStatus().equals("확정")) {
+            this.service.confirmProposal(itemId, proposalId, negotiationStatusDto);
             ResponseDto response = new ResponseDto();
             response.setMessage("구매가 확정되었습니다.");
             return ResponseEntity
@@ -71,7 +100,7 @@ public class NegotiationController {
         }
         // 제안 수락 or 거절
         else {
-            this.service.acceptOrRejectProposal(itemId, proposalId, negotiationDto);
+            this.service.acceptOrRejectProposal(itemId, proposalId, negotiationStatusDto);
             ResponseDto response = new ResponseDto();
             response.setMessage("제안의 상태가 변경되었습니다.");
             return ResponseEntity
@@ -79,24 +108,6 @@ public class NegotiationController {
         }
 
     }
-
-    //구매제안 삭제
-    //DELETE /items/{itemId}/proposals/{proposalId}
-    @DeleteMapping("/{proposalId}")
-    public ResponseEntity<ResponseDto> delete(
-            @PathVariable("itemId") Long itemId,
-            @PathVariable("proposalId") Long proposalId,
-            @RequestBody NegotiationDto negotiationDto
-    ){
-        this.service.deleteProposal(itemId, proposalId, negotiationDto);
-        ResponseDto response = new ResponseDto();
-        response.setMessage("제안을 삭제했습니다.");
-        return ResponseEntity
-                .ok(response);
-    }
-
-
-
 
 
 }

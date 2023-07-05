@@ -1,5 +1,6 @@
 package com.example.mutsamarket.service;
 
+import com.example.mutsamarket.dto.DeleteDto;
 import com.example.mutsamarket.dto.ItemDto;
 import com.example.mutsamarket.dto.ItemGetDto;
 import com.example.mutsamarket.entity.ItemEntity;
@@ -127,7 +128,7 @@ public class ItemService {
     }
 
     //물품 삭제
-    public void deleteItem(Long id, ItemDto dto){
+    public void deleteItem(Long id, DeleteDto dto){
         Optional<ItemEntity> optionalItem = repository.findById(id);
         if (optionalItem.isEmpty()) throw new ResponseStatusException(HttpStatus.NOT_FOUND);
 

@@ -1,6 +1,7 @@
 package com.example.mutsamarket.service;
 
 import com.example.mutsamarket.dto.CommentDto;
+import com.example.mutsamarket.dto.CommentGetDto;
 import com.example.mutsamarket.entity.CommentEntity;
 import com.example.mutsamarket.entity.ItemEntity;
 import com.example.mutsamarket.repository.CommentRepository;
@@ -42,10 +43,10 @@ public class CommentService {
     }
 
     //페이지 단위 댓글 조회
-    public Page<CommentDto> readCommentAll(Long itemId, Integer pageNum, Integer pageSize){
+    public Page<CommentGetDto> readCommentAll(Long itemId, Integer pageNum, Integer pageSize){
         Pageable pageable = PageRequest.of(pageNum, pageSize, Sort.by("id").ascending());
         Page<CommentEntity> commentEntityList = commentRepository.findAllByItemId(itemId, pageable);
-        return commentEntityList.map(CommentDto::fromEntity);
+        return commentEntityList.map(CommentGetDto::fromEntity);
 
     }
 

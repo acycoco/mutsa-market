@@ -1,6 +1,7 @@
 package com.example.mutsamarket.controller;
 
 import com.example.mutsamarket.dto.CommentDto;
+import com.example.mutsamarket.dto.CommentGetDto;
 import com.example.mutsamarket.dto.ResponseDto;
 import com.example.mutsamarket.service.CommentService;
 import jakarta.validation.Valid;
@@ -34,7 +35,7 @@ public class CommentController {
     //페이지 단위 댓글 조회
     //GET /items/{itemId}/comments
     @GetMapping
-    public ResponseEntity<Page<CommentDto>> readAll(
+    public ResponseEntity<Page<CommentGetDto>> readAll(
             @PathVariable("itemId") Long itemId,
             @RequestParam(value = "page",defaultValue = "0") Integer page,
             @RequestParam(value = "limit", defaultValue = "20") Integer limit

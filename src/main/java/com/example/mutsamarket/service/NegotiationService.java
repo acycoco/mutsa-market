@@ -1,6 +1,7 @@
 package com.example.mutsamarket.service;
 
 import com.example.mutsamarket.dto.NegotiationDto;
+import com.example.mutsamarket.dto.NegotiationGetDto;
 import com.example.mutsamarket.entity.ItemEntity;
 import com.example.mutsamarket.entity.NegotiationEntity;
 import com.example.mutsamarket.repository.ItemRepository;
@@ -44,7 +45,7 @@ public class NegotiationService {
     //구매제안 조회
     //대상물품 주인 => 작성자, 비밀번호 확인
     //모든 구매제안 조회, 페이지 조회
-    public Page<NegotiationDto> readAllProposal(
+    public Page<NegotiationGetDto> readAllProposal(
             Long itemId, String writer, String password,
             Integer pageNum, Integer pageSize
     ){
@@ -63,14 +64,14 @@ public class NegotiationService {
         //물품 주인의 작성자, 비밀번호 확인
         if (item.getWriter().equals(writer) && item.getPassword().equals(password)){
             //물품 주인은 itemId에 대한 모든 구매 제안 조회 / 페이지 단위 조회
-            return negotiationRepository.findAllByItemId(itemId, pageable).map(NegotiationDto::fromEntity);
+            return negotiationRepository.findAllByItemId(itemId, pageable).map(NegotiationGetDto::fromEntity);
 
         }
         else {
             //제안 등록한 사용자는 itemId에 대한 자신의 구매제안 조회/ 페이지 단위 조회
             //작성자, 비밀번호 확인
             return negotiationRepository.findAllByItemIdAndWriterAndPassword(itemId, writer, password, pageable)
-                    .map(NegotiationDto::fromEntity);
+                    .map(NegotiationGetDto::fromEntity);
         }
 
     }

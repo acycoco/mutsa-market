@@ -1,6 +1,7 @@
 package com.example.mutsamarket.controller;
 
 import com.example.mutsamarket.dto.NegotiationDto;
+import com.example.mutsamarket.dto.NegotiationGetDto;
 import com.example.mutsamarket.dto.ResponseDto;
 import com.example.mutsamarket.service.NegotiationService;
 import jakarta.validation.Valid;
@@ -33,7 +34,7 @@ public class NegotiationController {
     //구매제안 조회
     //GET /items/{itemId}/proposals?writer=jeeho.edu&password=qwerty1234&page=1
     @GetMapping
-    public ResponseEntity<Page<NegotiationDto>> readAll(
+    public ResponseEntity<Page<NegotiationGetDto>> readAll(
             @PathVariable("itemId") Long itemId,
             @RequestParam("writer") String writer,
             @RequestParam("password") String password,

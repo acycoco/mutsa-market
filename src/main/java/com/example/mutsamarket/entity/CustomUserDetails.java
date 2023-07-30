@@ -63,6 +63,7 @@ public class CustomUserDetails implements UserDetails {
     public static CustomUserDetails fromEntity(UserEntity entity){
         return CustomUserDetails.builder()
                 .id(entity.getId())
+                .username(entity.getUsername())
                 .password(entity.getPassword())
                 .phone(entity.getPhone())
                 .email(entity.getEmail())

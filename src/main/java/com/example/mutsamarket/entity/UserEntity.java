@@ -4,7 +4,7 @@ import jakarta.persistence.*;
 import lombok.Data;
 
 @Entity
-@Table(name = "user")
+@Table(name = "users")
 @Data
 public class UserEntity {
     @Id
@@ -16,6 +16,7 @@ public class UserEntity {
     //TODO validation 추가
     @Column(nullable = false)
     private String password;
+
     private String phone;
     private String email;
     private String address;

@@ -1,6 +1,9 @@
 package com.example.mutsamarket.controller;
 
 import com.example.mutsamarket.dto.*;
+import com.example.mutsamarket.dto.Negotiation.NegotiationDto;
+import com.example.mutsamarket.dto.Negotiation.NegotiationGetDto;
+import com.example.mutsamarket.dto.Negotiation.NegotiationStatusDto;
 import com.example.mutsamarket.service.NegotiationService;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;

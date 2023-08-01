@@ -1,9 +1,9 @@
 package com.example.mutsamarket.service;
 
 import com.example.mutsamarket.dto.DeleteDto;
-import com.example.mutsamarket.dto.NegotiationDto;
-import com.example.mutsamarket.dto.NegotiationGetDto;
-import com.example.mutsamarket.dto.NegotiationStatusDto;
+import com.example.mutsamarket.dto.Negotiation.NegotiationDto;
+import com.example.mutsamarket.dto.Negotiation.NegotiationGetDto;
+import com.example.mutsamarket.dto.Negotiation.NegotiationStatusDto;
 import com.example.mutsamarket.entity.ItemEntity;
 import com.example.mutsamarket.entity.NegotiationEntity;
 import com.example.mutsamarket.repository.ItemRepository;

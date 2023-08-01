@@ -1,7 +1,6 @@
-package com.example.mutsamarket.dto;
+package com.example.mutsamarket.dto.comment;
 
 import com.example.mutsamarket.entity.CommentEntity;
-import jakarta.validation.constraints.NotBlank;
 import lombok.Data;
 
 @Data

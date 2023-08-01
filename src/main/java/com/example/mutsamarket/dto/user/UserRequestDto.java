@@ -1,4 +1,4 @@
-package com.example.mutsamarket.dto;
+package com.example.mutsamarket.dto.user;
 
 import com.example.mutsamarket.entity.UserEntity;
 import lombok.Data;

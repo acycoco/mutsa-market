@@ -1,4 +1,4 @@
-package com.example.mutsamarket.dto;
+package com.example.mutsamarket.dto.Negotiation;
 
 
 import com.example.mutsamarket.entity.NegotiationEntity;

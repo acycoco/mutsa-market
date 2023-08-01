@@ -1,8 +1,8 @@
 package com.example.mutsamarket.service;
 
 import com.example.mutsamarket.dto.DeleteDto;
-import com.example.mutsamarket.dto.ItemDto;
-import com.example.mutsamarket.dto.ItemGetDto;
+import com.example.mutsamarket.dto.item.ItemDto;
+import com.example.mutsamarket.dto.item.ItemGetDto;
 import com.example.mutsamarket.entity.ItemEntity;
 import com.example.mutsamarket.repository.ItemRepository;
 import lombok.RequiredArgsConstructor;
@@ -19,8 +19,6 @@ import org.springframework.web.server.ResponseStatusException;
 import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
-import java.util.ArrayList;
-import java.util.List;
 import java.util.Optional;
 
 @Slf4j

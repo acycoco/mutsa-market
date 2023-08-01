@@ -2,8 +2,8 @@ package com.example.mutsamarket.controller;
 
 
 import com.example.mutsamarket.dto.DeleteDto;
-import com.example.mutsamarket.dto.ItemDto;
-import com.example.mutsamarket.dto.ItemGetDto;
+import com.example.mutsamarket.dto.item.ItemDto;
+import com.example.mutsamarket.dto.item.ItemGetDto;
 import com.example.mutsamarket.dto.ResponseDto;
 import com.example.mutsamarket.service.ItemService;
 import jakarta.validation.Valid;
@@ -15,8 +15,6 @@ import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
-
-import java.util.List;
 
 @Slf4j
 @RestController

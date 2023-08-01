@@ -1,6 +1,9 @@
 package com.example.mutsamarket.service;
 
 import com.example.mutsamarket.dto.*;
+import com.example.mutsamarket.dto.comment.CommentDto;
+import com.example.mutsamarket.dto.comment.CommentGetDto;
+import com.example.mutsamarket.dto.comment.CommentReplyDto;
 import com.example.mutsamarket.entity.CommentEntity;
 import com.example.mutsamarket.entity.ItemEntity;
 import com.example.mutsamarket.repository.CommentRepository;
@@ -15,8 +18,6 @@ import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 import org.springframework.web.server.ResponseStatusException;
 
-import javax.xml.stream.events.Comment;
-import java.util.List;
 import java.util.Optional;
 
 @Slf4j

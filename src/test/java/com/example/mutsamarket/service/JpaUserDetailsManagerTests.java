@@ -1,7 +1,8 @@
-package com.example.mutsamarket.repository;
+package com.example.mutsamarket.service;
 
 import com.example.mutsamarket.entity.CustomUserDetails;
 import com.example.mutsamarket.entity.UserEntity;
+import com.example.mutsamarket.repository.UserRepository;
 import com.example.mutsamarket.service.JpaUserDetailsManager;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;

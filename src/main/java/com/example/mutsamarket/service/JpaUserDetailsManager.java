@@ -52,6 +52,7 @@ public class JpaUserDetailsManager implements UserDetailsManager {
         return userRepository.existsByUsername(username);
     }
 
+    //TODO 밑에 더 작성해야됨
 
     @Override
     public void updateUser(UserDetails user) {
@@ -67,8 +68,6 @@ public class JpaUserDetailsManager implements UserDetailsManager {
     public void changePassword(String oldPassword, String newPassword) {
 
     }
-
-
 
 
 }

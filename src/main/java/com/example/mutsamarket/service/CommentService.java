@@ -30,11 +30,12 @@ public class CommentService {
     //댓글 등록
     public CommentDto createComment(Long itemId, CommentDto commentDto){
         //해당 itemId가 있는지 확인
-        if (!itemRepository.existsById(itemId))
+        Optional<ItemEntity> optionalItem = itemRepository.findById(itemId);
+        if (optionalItem.isEmpty())
             throw new ResponseStatusException(HttpStatus.NOT_FOUND);
 
         CommentEntity comment = new CommentEntity();
-        comment.setItemId(itemId);
+        comment.setItem(optionalItem.get());
         comment.setWriter(commentDto.getWriter());
         comment.setPassword(commentDto.getPassword());
         comment.setContent(commentDto.getContent());
@@ -61,7 +62,7 @@ public class CommentService {
         CommentEntity comment = optionalComment.get();
 
         //해당 댓글이 해당 item의 댓글이 맞는지 확인
-        if (!comment.getItemId().equals(itemId))
+        if (!comment.getItem().getId().equals(itemId))
             throw new ResponseStatusException(HttpStatus.BAD_REQUEST);
 
         //댓글 비밀번호 확인
@@ -83,7 +84,7 @@ public class CommentService {
         CommentEntity comment = optionalComment.get();
 
         //해당 댓글이 해당 item의 댓글이 맞는지 확인
-        if (!comment.getItemId().equals(itemId))
+        if (!comment.getItem().getId().equals(itemId))
             throw new ResponseStatusException(HttpStatus.BAD_REQUEST);
 
         Optional<ItemEntity> optionalItem = itemRepository.findById(itemId);
@@ -106,9 +107,10 @@ public class CommentService {
         //commentId가 존재하는지 확인
         if (optionalComment.isEmpty())
             throw new ResponseStatusException(HttpStatus.NOT_FOUND);
+
         //해당 댓글이 해당 item의 댓글이 맞는지 확인
         CommentEntity comment = optionalComment.get();
-        if (!comment.getItemId().equals(itemId))
+        if (!comment.getItem().getId().equals(itemId))
             throw new ResponseStatusException(HttpStatus.BAD_REQUEST);
 
         //비밀번호확인
@@ -116,6 +118,8 @@ public class CommentService {
             throw new ResponseStatusException(HttpStatus.BAD_REQUEST);
 
         //삭제한다.
+        //연관관계 삭제 후 comment삭제
+        comment.setItem(null);
         commentRepository.deleteById(commentId);
 
     }

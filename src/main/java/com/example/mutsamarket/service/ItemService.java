@@ -3,8 +3,12 @@ package com.example.mutsamarket.service;
 import com.example.mutsamarket.dto.DeleteDto;
 import com.example.mutsamarket.dto.item.ItemDto;
 import com.example.mutsamarket.dto.item.ItemGetDto;
+import com.example.mutsamarket.entity.CommentEntity;
 import com.example.mutsamarket.entity.ItemEntity;
+import com.example.mutsamarket.entity.NegotiationEntity;
+import com.example.mutsamarket.repository.CommentRepository;
 import com.example.mutsamarket.repository.ItemRepository;
+import com.example.mutsamarket.repository.NegotiationRepository;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.data.domain.Page;
@@ -19,6 +23,7 @@ import org.springframework.web.server.ResponseStatusException;
 import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
+import java.util.List;
 import java.util.Optional;
 
 @Slf4j
@@ -26,6 +31,8 @@ import java.util.Optional;
 @RequiredArgsConstructor
 public class ItemService {
     private final ItemRepository repository;
+    private final CommentRepository commentRepository;
+    private final NegotiationRepository negotiationRepository;
 
 
     //물품 등록
@@ -134,6 +141,19 @@ public class ItemService {
         // 비밀번호 확인
         if (!item.getPassword().equals(dto.getPassword()))
             throw new ResponseStatusException(HttpStatus.BAD_REQUEST);
+
+        //해당 물품 판매 글의 댓글들 삭제
+        List<CommentEntity> comments = item.getComments();
+        for (CommentEntity comment : comments){
+            comment.setItem(null);
+            commentRepository.delete(comment);
+        }
+
+        List<NegotiationEntity> negotiations = item.getNegotiations();
+        for (NegotiationEntity negotiation : negotiations){
+            negotiation.setItem(null);
+            negotiationRepository.delete(negotiation);
+        }
 
         repository.deleteById(id);
 

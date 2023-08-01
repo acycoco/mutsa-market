@@ -30,17 +30,21 @@ public class NegotiationService {
     //구매제안 등록
     public NegotiationDto createProposal(Long itemId, NegotiationDto dto){
         //itemId를 찾을 수 없으면 NOT FOUND
-        if (!itemRepository.existsById(itemId))
+        Optional<ItemEntity> optionalItem = itemRepository.findById(itemId);
+        if (optionalItem.isEmpty())
             throw new ResponseStatusException(HttpStatus.NOT_FOUND);
+
         //새 NegotiationEntity 생성
         NegotiationEntity negotiation = new NegotiationEntity();
-        negotiation.setItemId(itemId);
+        negotiation.setItem(optionalItem.get());
         negotiation.setSuggestedPrice(dto.getSuggestedPrice());
+
         //등록할 때, status = "제안"
         if (negotiation.getStatus() == null)
             negotiation.setStatus("제안");
         negotiation.setWriter(dto.getWriter());
         negotiation.setPassword(dto.getPassword());
+
         return NegotiationDto.fromEntity(negotiationRepository.save(negotiation));
     }
 
@@ -56,10 +60,8 @@ public class NegotiationService {
         if (optionalItem.isEmpty())
             throw new ResponseStatusException(HttpStatus.NOT_FOUND);
 
-
         //id 오름차순으로 페이지 단위
         Pageable pageable = PageRequest.of(pageNum, pageSize, Sort.by("id").ascending());
-
 
         ItemEntity item = optionalItem.get();
 
@@ -83,13 +85,15 @@ public class NegotiationService {
     //구매제안 수정
     //작성자, 비밀번호 확인
     public NegotiationDto updateProposal(Long itemId, Long proposalId, NegotiationDto dto){
+
         //NegotiationEntity확인
         Optional<NegotiationEntity> optionalNegotiation = negotiationRepository.findById(proposalId);
         if (optionalNegotiation.isEmpty())
             throw new ResponseStatusException(HttpStatus.NOT_FOUND);
+
         //itemId가 맞는지 확인
         NegotiationEntity negotiation = optionalNegotiation.get();
-        if (!negotiation.getItemId().equals(itemId))
+        if (!negotiation.getItem().getId().equals(itemId))
             throw new ResponseStatusException(HttpStatus.BAD_REQUEST);
 
         //작성자, 비밀번호 확인
@@ -104,19 +108,23 @@ public class NegotiationService {
     //구매제안 삭제
     //작성자, 비밀번호 확인
     public void deleteProposal(Long itemId, Long proposalId, DeleteDto dto){
+
         //NegotiationEntity확인
         Optional<NegotiationEntity> optionalNegotiation = negotiationRepository.findById(proposalId);
         if (optionalNegotiation.isEmpty())
             throw new ResponseStatusException(HttpStatus.NOT_FOUND);
+
         //itemId가 맞는지 확인
         NegotiationEntity negotiation = optionalNegotiation.get();
-        if (!negotiation.getItemId().equals(itemId))
+        if (!negotiation.getItem().getId().equals(itemId))
             throw new ResponseStatusException(HttpStatus.BAD_REQUEST);
 
         //작성자, 비밀번호 확인
         if (!negotiation.getWriter().equals(dto.getWriter()) || !negotiation.getPassword().equals(dto.getPassword()))
             throw new ResponseStatusException(HttpStatus.BAD_REQUEST);
 
+        //연관관계 삭제 후 negotiation삭제
+        negotiation.setItem(null);
         negotiationRepository.deleteById(proposalId);
 
     }
@@ -133,11 +141,11 @@ public class NegotiationService {
             throw new ResponseStatusException(HttpStatus.NOT_FOUND);
         //itemId가 맞는지 확인
         NegotiationEntity negotiation = optionalNegotiation.get();
-        if (!negotiation.getItemId().equals(itemId))
+        if (!negotiation.getItem().getId().equals(itemId))
             throw new ResponseStatusException(HttpStatus.BAD_REQUEST);
 
         //itemId로 ItemEntity가져오기
-        Optional<ItemEntity> optionalItem = itemRepository.findById(itemId);
+        Optional<ItemEntity> optionalItem = Optional.of(negotiation.getItem());
         if (optionalItem.isEmpty())
             throw new ResponseStatusException(HttpStatus.NOT_FOUND);
 
@@ -166,7 +174,7 @@ public class NegotiationService {
             throw new ResponseStatusException(HttpStatus.NOT_FOUND);
         //itemId가 맞는지 확인
         NegotiationEntity negotiation = optionalNegotiation.get();
-        if (!negotiation.getItemId().equals(itemId))
+        if (!negotiation.getItem().getId().equals(itemId))
             throw new ResponseStatusException(HttpStatus.BAD_REQUEST);
 
         //구매제안 등록자의 작성자와 비밀번호 확인

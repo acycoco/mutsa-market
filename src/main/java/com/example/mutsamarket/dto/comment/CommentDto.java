@@ -1,13 +1,14 @@
 package com.example.mutsamarket.dto.comment;
 
 import com.example.mutsamarket.entity.CommentEntity;
+import com.example.mutsamarket.entity.ItemEntity;
 import jakarta.validation.constraints.NotBlank;
 import lombok.Data;
 
 @Data
 public class CommentDto {
     private Long id;
-    private Long itemId;
+    private ItemEntity item;
 
     @NotBlank(message = "공백이거나 입력하지 않았습니다.")
     private String writer;
@@ -23,7 +24,7 @@ public class CommentDto {
     public static CommentDto fromEntity(CommentEntity entity){
         CommentDto dto = new CommentDto();
         dto.setId(entity.getId());
-        dto.setItemId(entity.getItemId());
+        dto.setItem(entity.getItem());
         dto.setWriter(entity.getWriter());
         dto.setPassword(entity.getPassword());
         dto.setContent(entity.getContent());

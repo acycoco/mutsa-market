@@ -12,9 +12,6 @@ public class NegotiationEntity {
     private Long id;
 
     @Column(nullable = false)
-    private Long itemId;
-
-    @Column(nullable = false)
     private Integer suggestedPrice;
 
     private String status;
@@ -24,4 +21,7 @@ public class NegotiationEntity {
 
     @Column(nullable = false)
     private String password;
+
+    @ManyToOne
+    private ItemEntity item;
 }

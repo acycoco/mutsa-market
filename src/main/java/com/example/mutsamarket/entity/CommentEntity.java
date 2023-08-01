@@ -12,9 +12,6 @@ public class CommentEntity {
     private Long id;
 
     @Column(nullable = false)
-    private Long itemId;
-
-    @Column(nullable = false)
     private String writer;
 
     @Column(nullable = false)
@@ -24,4 +21,7 @@ public class CommentEntity {
     private String content;
 
     private String reply;
+
+    @ManyToOne
+    private ItemEntity item;
 }

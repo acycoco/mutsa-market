@@ -4,6 +4,8 @@ import jakarta.persistence.*;
 import lombok.Builder;
 import lombok.Data;
 
+import java.util.List;
+
 @Data
 @Entity
 @Table(name = "sales_item")
@@ -30,5 +32,11 @@ public class ItemEntity {
 
     @Column(nullable = false)
     private String password;
+
+    @OneToMany(mappedBy = "item")
+    private List<CommentEntity> comments;
+
+    @OneToMany(mappedBy = "item")
+    private List<NegotiationEntity> negotiations;
 
 }

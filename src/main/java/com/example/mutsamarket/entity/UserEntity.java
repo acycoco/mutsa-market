@@ -20,4 +20,5 @@ public class UserEntity {
     private String phone;
     private String email;
     private String address;
+
 }

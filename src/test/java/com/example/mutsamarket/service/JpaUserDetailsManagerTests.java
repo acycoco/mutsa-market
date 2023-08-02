@@ -17,12 +17,10 @@ import org.springframework.web.server.ResponseStatusException;
 
 import java.util.Optional;
 
-import static org.mockito.Mockito.verify;
-import static org.mockito.Mockito.when;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.ArgumentMatchers.any;
-
+import static org.mockito.Mockito.*;
 
 
 @ActiveProfiles("test")
@@ -117,5 +115,54 @@ public class JpaUserDetailsManagerTests {
         //then
         assertTrue(result1);
         assertFalse(result2);
+    }
+
+    @Test
+    public void testUpdateUserSuccess(){
+        //given
+        String username = "user";
+        String password = "1234";
+
+        CustomUserDetails userDetails = CustomUserDetails.builder()
+                .username(username)
+                .password(password)
+                .build();
+
+
+        when(userRepository.findByUsername(userDetails.getUsername()))
+                .thenReturn(Optional.of(userDetails.newEntity()));
+
+        //when
+        manager.updateUser(userDetails);
+
+        //then
+        verify(userRepository, times(1)).save(any(UserEntity.class));
+
+    }
+
+    @Test
+    public void testUpdateUserFail(){
+        //given
+        String username = "user";
+        String password = "1234";
+
+        CustomUserDetails userDetails = CustomUserDetails.builder()
+                .username(username)
+                .password(password)
+                .build();
+
+
+        when(userRepository.findByUsername(userDetails.getUsername()))
+                .thenReturn(Optional.empty());
+
+        //when
+        assertThrows(ResponseStatusException.class, () -> {
+
+            manager.updateUser(userDetails);
+        });
+
+        //then
+        verify(userRepository, never()).save(any(UserEntity.class));
+
     }
 }

@@ -18,6 +18,9 @@ public class ItemGetDto {
 
     private String status;
 
+    private String username;
+
+
 
     public static ItemGetDto fromEntity(ItemEntity entity){
         ItemGetDto dto = new ItemGetDto();
@@ -27,6 +30,10 @@ public class ItemGetDto {
         dto.setImageUrl(entity.getImageUrl());
         dto.setMinPriceWanted(entity.getMinPriceWanted());
         dto.setStatus(entity.getStatus());
+        //NullPointException방지
+        if (entity.getUser() != null){
+            dto.setUsername(entity.getUser().getUsername());
+        }
         return dto;
     }
 }

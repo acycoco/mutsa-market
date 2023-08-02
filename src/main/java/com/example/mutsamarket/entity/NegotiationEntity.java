@@ -16,12 +16,13 @@ public class NegotiationEntity {
 
     private String status;
 
-    @Column(nullable = false)
     private String writer;
 
-    @Column(nullable = false)
     private String password;
 
     @ManyToOne
     private ItemEntity item;
+
+    @ManyToOne
+    private UserEntity user;
 }

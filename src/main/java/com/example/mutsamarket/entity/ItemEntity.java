@@ -27,10 +27,8 @@ public class ItemEntity {
 
     private String status;
 
-    @Column(nullable = false)
     private String writer;
 
-    @Column(nullable = false)
     private String password;
 
     @OneToMany(mappedBy = "item")
@@ -38,5 +36,8 @@ public class ItemEntity {
 
     @OneToMany(mappedBy = "item")
     private List<NegotiationEntity> negotiations;
+
+    @ManyToOne
+    private UserEntity user;
 
 }

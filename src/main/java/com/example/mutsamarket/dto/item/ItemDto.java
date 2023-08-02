@@ -24,10 +24,8 @@ public class ItemDto {
 
     private String status;
 
-    @NotBlank(message = "공백이거나 입력하지 않았습니다.")
     private String writer;
 
-    @NotBlank(message = "공백이거나 입력하지 않았습니다.")
     private String password;
 
     public static ItemDto fromEntity(ItemEntity entity){

@@ -11,10 +11,8 @@ public class DeleteDto {
     //삭제시 필요한 dto -> 작성자, 비밀번호 유효성 검증
     private Long id;
 
-    @NotBlank(message = "공백이거나 입력하지 않았습니다.")
     private String writer;
 
-    @NotBlank(message = "공백이거나 입력하지 않았습니다.")
     private String password;
 
     public static DeleteDto fromEntity(ItemEntity entity){

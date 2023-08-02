@@ -11,10 +11,8 @@ public class CommentEntity {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @Column(nullable = false)
     private String writer;
 
-    @Column(nullable = false)
     private String password;
 
     @Column(nullable = false)
@@ -24,4 +22,7 @@ public class CommentEntity {
 
     @ManyToOne
     private ItemEntity item;
+
+    @ManyToOne
+    private UserEntity user;
 }

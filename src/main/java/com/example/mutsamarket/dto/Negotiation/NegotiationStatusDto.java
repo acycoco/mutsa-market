@@ -13,10 +13,8 @@ public class NegotiationStatusDto {
     @NotBlank(message = "공백이거나 입력하지 않았습니다.") @Pattern(regexp = "^(확정|수락|거절)$", message = "상태는 확정, 수락, 거절 중 하나여야 합니다.")
     private String status;
 
-    @NotBlank(message = "공백이거나 입력하지 않았습니다.")
     private String writer;
 
-    @NotBlank(message = "공백이거나 입력하지 않았습니다.")
     private String password;
 
     public static NegotiationStatusDto fromEntity(NegotiationEntity entity){

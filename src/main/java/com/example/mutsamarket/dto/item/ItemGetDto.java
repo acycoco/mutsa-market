@@ -21,7 +21,6 @@ public class ItemGetDto {
     private String username;
 
 
-
     public static ItemGetDto fromEntity(ItemEntity entity){
         ItemGetDto dto = new ItemGetDto();
         dto.setId(entity.getId());

@@ -10,10 +10,8 @@ public class CommentReplyDto {
     // reply 유효성검증 추가
     private Long id;
 
-    @NotBlank(message = "공백이거나 입력하지 않았습니다.")
     private String writer;
 
-    @NotBlank(message = "공백이거나 입력하지 않았습니다.")
     private String password;
 
     @NotBlank(message = "공백이거나 입력하지 않았습니다.")

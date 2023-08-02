@@ -3,6 +3,7 @@ package com.example.mutsamarket.config;
 import com.example.mutsamarket.jwt.JwtTokenFilter;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.http.HttpMethod;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configurers.AbstractHttpConfigurer;
 import org.springframework.security.config.http.SessionCreationPolicy;
@@ -27,6 +28,10 @@ public class WebSecurityConfig {
                 authHttp
                         .requestMatchers("/token/issue")
                         .permitAll()
+                        .requestMatchers(HttpMethod.GET,"/items/**")
+                        .permitAll()
+                        .requestMatchers(HttpMethod.GET,"/item/{itemId}/proposals")
+                        .authenticated()
                         .requestMatchers("/users/register")
                         .anonymous()
                         .anyRequest()

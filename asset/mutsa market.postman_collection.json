@@ -1,0 +1,683 @@
+{
+	"info": {
+		"_postman_id": "dd844b34-4264-499f-924e-f7b6e7d038cd",
+		"name": "mutsa market",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "28055547"
+	},
+	"item": [
+		{
+			"name": "POST /items",
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJraW0gayIsImlhdCI6MTY5MDk2NzQwNCwiZXhwIjoxNjkxMDAzNDA0fQ.PcfQoEHf4V6EbenzOKrCqjlmRFaWrL-7H-hsLyX3urrbV7Z_ANktbWXzDr-dWBEdSfv_5noMPYSmMjf9RL35fw",
+							"type": "string"
+						}
+					]
+				},
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"title\": \"강아지 노즈워크 장난감 팝니다.\",\r\n    \"description\": \"거의 새거입니다. 싸게 가져가세요.\",\r\n    \"minPriceWanted\": 10000\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:8080/items",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"items"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "GET /items?page={page}&limit={limit}",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:8080/items",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"items"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "GET /items/{itemId}",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:8080/items/42",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"items",
+						"42"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "PUT /items/{itemId}",
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJraW0gayIsImlhdCI6MTY5MDk2NTM0NSwiZXhwIjoxNjkxMDAxMzQ1fQ.D3_xbckFZPpj95gjU7lAWEE4K7wnNyGStPXO5xbltyqDZsfji849x3LzwtRiLvlE_JnQwRDAqWNY2s12FrzO0Q",
+							"type": "string"
+						}
+					]
+				},
+				"method": "PUT",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"title\": \"중고 맥북 팝니다\",\r\n    \"description\": \"2019년 맥북 프로 13인치 모델입니다\",\r\n    \"minPriceWanted\": 1250000\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:8080/items/42",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"items",
+						"42"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "PUT /items/{itemId}/image",
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJraW0gayIsImlhdCI6MTY5MDk1OTgzOCwiZXhwIjoxNjkwOTk1ODM4fQ.eK9o_4wzDnBkPArhFbAqKpkIwZ-YQGHfwLIZcocQ4h25YLDmoOXl51xpT02l9ah5h0h8Nd0GSbM20xTr2jEdvQ",
+							"type": "string"
+						}
+					]
+				},
+				"method": "PUT",
+				"header": [],
+				"body": {
+					"mode": "formdata",
+					"formdata": [
+						{
+							"key": "image",
+							"type": "file",
+							"src": "/C:/Users/MMBY777LUCKY/Downloads/dachshund-6336468_1280.png"
+						}
+					]
+				},
+				"url": {
+					"raw": "http://localhost:8080/items/42/image",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"items",
+						"42",
+						"image"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "DELETE /items/{itemId}",
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJraW0gayIsImlhdCI6MTY5MDk2NTM0NSwiZXhwIjoxNjkxMDAxMzQ1fQ.D3_xbckFZPpj95gjU7lAWEE4K7wnNyGStPXO5xbltyqDZsfji849x3LzwtRiLvlE_JnQwRDAqWNY2s12FrzO0Q",
+							"type": "string"
+						}
+					]
+				},
+				"method": "DELETE",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:8080/items/42",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"items",
+						"42"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "POST /items/{itemId}/comments",
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJraW0gayIsImlhdCI6MTY5MDk2NzQwNCwiZXhwIjoxNjkxMDAzNDA0fQ.PcfQoEHf4V6EbenzOKrCqjlmRFaWrL-7H-hsLyX3urrbV7Z_ANktbWXzDr-dWBEdSfv_5noMPYSmMjf9RL35fw",
+							"type": "string"
+						}
+					]
+				},
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"content\": \"할인 가능하신가요?\"\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:8080/items/42/comments",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"items",
+						"42",
+						"comments"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "GET /items/{itemId}/comments",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:8080/items/42/comments?page=0&limit=20",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"items",
+						"42",
+						"comments"
+					],
+					"query": [
+						{
+							"key": "page",
+							"value": "0"
+						},
+						{
+							"key": "limit",
+							"value": "20"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "PUT /items/{itemId}/comments/{commentId}",
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJraW0gayIsImlhdCI6MTY5MDk2NTM0NSwiZXhwIjoxNjkxMDAxMzQ1fQ.D3_xbckFZPpj95gjU7lAWEE4K7wnNyGStPXO5xbltyqDZsfji849x3LzwtRiLvlE_JnQwRDAqWNY2s12FrzO0Q",
+							"type": "string"
+						}
+					]
+				},
+				"method": "PUT",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"content\": \"할인 가능하신가요?11 1000000 정도면 고려 가능합니다\"\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:8080/items/42/comments/1",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"items",
+						"42",
+						"comments",
+						"1"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "PUT /items/{itemId}/comments/{commentId}/reply",
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJraW0gYSIsImlhdCI6MTY5MDk2NTY2OCwiZXhwIjoxNjkxMDAxNjY4fQ.NkS3b4-WbtqYP7BTZqNmuEce1Xn-uDMiU2rI-EvKiga7yCuClOp7ap35PkypyOL44OtMGjmY29mTMcWk_0Qr1w",
+							"type": "string"
+						}
+					]
+				},
+				"method": "PUT",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"reply\": \"안됩니다\"\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:8080/items/42/comments/1/reply",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"items",
+						"42",
+						"comments",
+						"1",
+						"reply"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "DELETE /items/{itemId}/comments/{commentId}",
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJraW0gYSIsImlhdCI6MTY5MDk2MTA1OSwiZXhwIjoxNjkwOTk3MDU5fQ.ezEv2fKsD8QXQ8yxl_ayNNlxfi8gsJkTPzJd6IpQ8--uFjxaV_PDOwOxjtPeWD5df4EQq8bRLaG7_dZMrG6Xkw",
+							"type": "string"
+						}
+					]
+				},
+				"method": "DELETE",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"writer\": \"jeeho.edu\",\r\n    \"password\": \"qwerty1234\"\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:8080/items/42/comments/1",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"items",
+						"42",
+						"comments",
+						"1"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "POST /items/{itemId}/proposals",
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJraW0gayIsImlhdCI6MTY5MDk2NzQwNCwiZXhwIjoxNjkxMDAzNDA0fQ.PcfQoEHf4V6EbenzOKrCqjlmRFaWrL-7H-hsLyX3urrbV7Z_ANktbWXzDr-dWBEdSfv_5noMPYSmMjf9RL35fw",
+							"type": "string"
+						}
+					]
+				},
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"suggestedPrice\": 1200000\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:8080/items/42/proposals",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"items",
+						"42",
+						"proposals"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "GET /items/{itemId}/proposals?page=1",
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJraW0gayIsImlhdCI6MTY5MDk2NzQwNCwiZXhwIjoxNjkxMDAzNDA0fQ.PcfQoEHf4V6EbenzOKrCqjlmRFaWrL-7H-hsLyX3urrbV7Z_ANktbWXzDr-dWBEdSfv_5noMPYSmMjf9RL35fw",
+							"type": "string"
+						}
+					]
+				},
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:8080/items/42/proposals",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"items",
+						"42",
+						"proposals"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "GET /items/{itemId}/proposals?page=1",
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJraW0gayIsImlhdCI6MTY5MDk2NzQwNCwiZXhwIjoxNjkxMDAzNDA0fQ.PcfQoEHf4V6EbenzOKrCqjlmRFaWrL-7H-hsLyX3urrbV7Z_ANktbWXzDr-dWBEdSfv_5noMPYSmMjf9RL35fw",
+							"type": "string"
+						}
+					]
+				},
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:8080/items/42/proposals?writer=jeeho.edu&password=qwerty1234&page=0",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"items",
+						"42",
+						"proposals"
+					],
+					"query": [
+						{
+							"key": "writer",
+							"value": "jeeho.edu"
+						},
+						{
+							"key": "password",
+							"value": "qwerty1234"
+						},
+						{
+							"key": "page",
+							"value": "0"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "PUT /items/{itemId}/proposals/{proposalId} 제안 수정",
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJraW0gYSIsImlhdCI6MTY5MDk2NTY2OCwiZXhwIjoxNjkxMDAxNjY4fQ.NkS3b4-WbtqYP7BTZqNmuEce1Xn-uDMiU2rI-EvKiga7yCuClOp7ap35PkypyOL44OtMGjmY29mTMcWk_0Qr1w",
+							"type": "string"
+						}
+					]
+				},
+				"method": "PUT",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"suggestedPrice\": 110000\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:8080/items/42/proposals/1",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"items",
+						"42",
+						"proposals",
+						"1"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "PUT /items/{itemId}/proposals/{proposalId} 수락 or 거절",
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJraW0gayIsImlhdCI6MTY5MDk2Njk0MiwiZXhwIjoxNjkxMDAyOTQyfQ.glqA6JqmvVQDjJeZSim0qUOs4d8JeG93vBN4fH6BEXkZe3LpOzWTOSz1-JZq94UqudFVcK45v77EIjJnrjyJ0w",
+							"type": "string"
+						}
+					]
+				},
+				"method": "PUT",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"status\": \"수락\"\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:8080/items/42/proposals/1/status",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"items",
+						"42",
+						"proposals",
+						"1",
+						"status"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "PUT /items/{itemId}/proposals/{proposalId} 구매 확정",
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJraW0gayIsImlhdCI6MTY5MDk2Njk0MiwiZXhwIjoxNjkxMDAyOTQyfQ.glqA6JqmvVQDjJeZSim0qUOs4d8JeG93vBN4fH6BEXkZe3LpOzWTOSz1-JZq94UqudFVcK45v77EIjJnrjyJ0w",
+							"type": "string"
+						}
+					]
+				},
+				"method": "PUT",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"status\": \"확정\"\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:8080/items/42/proposals/1/status",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"items",
+						"42",
+						"proposals",
+						"1",
+						"status"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "DELETE /items/{itemId}/proposals/{proposalId}",
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJraW0gayIsImlhdCI6MTY5MDk2NzQwNCwiZXhwIjoxNjkxMDAzNDA0fQ.PcfQoEHf4V6EbenzOKrCqjlmRFaWrL-7H-hsLyX3urrbV7Z_ANktbWXzDr-dWBEdSfv_5noMPYSmMjf9RL35fw",
+							"type": "string"
+						}
+					]
+				},
+				"method": "DELETE",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:8080/items/42/proposals/1",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"items",
+						"42",
+						"proposals",
+						"1"
+					]
+				}
+			},
+			"response": []
+		}
+	]
+}

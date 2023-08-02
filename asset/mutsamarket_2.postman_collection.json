@@ -1,0 +1,185 @@
+{
+	"info": {
+		"_postman_id": "44d95bca-9507-4dbc-9853-64975013b4bb",
+		"name": "mutsamarket_2",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "28055547"
+	},
+	"item": [
+		{
+			"name": "POST /users/register",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"username\":\"kim k\",\r\n    \"password\":\"123456\",\r\n    \"passwordCheck\":\"123456\"\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:8080/users/register",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"users",
+						"register"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "POST /token/issue",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"username\":\"kim k\",\r\n    \"password\":\"123456\"\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:8080/token/issue",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"token",
+						"issue"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "PUT /users/update",
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJraW0gayIsImlhdCI6MTY5MDk3MzczMiwiZXhwIjoxNjkxMDA5NzMyfQ.n6UgWa4xWskhXiRRW817_XOQ7dv9iz8rEnibuojUkw8F-D3vKuz1Pds-ydSLJhoag1qLd1pDN5ROOUGWz0zIWg",
+							"type": "string"
+						}
+					]
+				},
+				"method": "PUT",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"password\":\"123456\",\r\n    \"phone\":\"010-2222-5555\",\r\n    \"email\":\"pgjwg@gmail.com\",\r\n    \"address\":\"서울시 용산구\"\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:8080/users/update",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"users",
+						"update"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "PUT /users/changePassword",
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJraW0gayIsImlhdCI6MTY5MDk2NTM0NSwiZXhwIjoxNjkxMDAxMzQ1fQ.D3_xbckFZPpj95gjU7lAWEE4K7wnNyGStPXO5xbltyqDZsfji849x3LzwtRiLvlE_JnQwRDAqWNY2s12FrzO0Q",
+							"type": "string"
+						}
+					]
+				},
+				"method": "PUT",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"oldPassword\":\"123456\",\r\n    \"newPassword\":\"987654\"\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:8080/users/changePassword",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"users",
+						"changePassword"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "DELETE /users/delete",
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJraW0gayIsImlhdCI6MTY5MDk2MjY4NCwiZXhwIjoxNjkwOTk4Njg0fQ.eyHfm675aNoUC6Zdab7z4oBQmQJMkJ8J67X-ZqkaPdCaqTuoKE3b8vUYR4W1C8gst9mnxfJ_wJVFnV3hR4Q-NQ",
+							"type": "string"
+						}
+					]
+				},
+				"method": "DELETE",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"password\":\"123456\"\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:8080/users/delete",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"users",
+						"delete"
+					]
+				}
+			},
+			"response": []
+		}
+	]
+}

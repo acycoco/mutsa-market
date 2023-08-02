@@ -88,8 +88,6 @@ public class ItemService {
 
         ItemEntity item = optionalItem.get();
 
-        log.info(item.getUser().getPassword());
-
         // 비밀번호 확인 둘다 암호화된 비밀번호
         if (!userUtils.getPassword().equals(item.getUser().getPassword()))
             throw new ResponseStatusException(HttpStatus.BAD_REQUEST);

@@ -6,8 +6,10 @@ import com.example.mutsamarket.dto.Negotiation.NegotiationGetDto;
 import com.example.mutsamarket.dto.Negotiation.NegotiationStatusDto;
 import com.example.mutsamarket.entity.ItemEntity;
 import com.example.mutsamarket.entity.NegotiationEntity;
+import com.example.mutsamarket.entity.UserEntity;
 import com.example.mutsamarket.repository.ItemRepository;
 import com.example.mutsamarket.repository.NegotiationRepository;
+import com.example.mutsamarket.repository.UserRepository;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.data.domain.Page;
@@ -26,6 +28,8 @@ import java.util.Optional;
 public class NegotiationService {
     private final NegotiationRepository negotiationRepository;
     private final ItemRepository itemRepository;
+    private final UserRepository userRepository;
+    private final UserUtils userUtils;
 
     //구매제안 등록
     public NegotiationDto createProposal(Long itemId, NegotiationDto dto){
@@ -42,6 +46,12 @@ public class NegotiationService {
         //등록할 때, status = "제안"
         if (negotiation.getStatus() == null)
             negotiation.setStatus("제안");
+
+        //현재 인증정보로 userRepository에 저장된 userEntity 가져오기
+        UserEntity userEntity = userUtils.getUserEntity(userRepository).orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND));
+        //userEntity등록
+        negotiation.setUser(userEntity);
+
         negotiation.setWriter(dto.getWriter());
         negotiation.setPassword(dto.getPassword());
 
@@ -52,9 +62,13 @@ public class NegotiationService {
     //대상물품 주인 => 작성자, 비밀번호 확인
     //모든 구매제안 조회, 페이지 조회
     public Page<NegotiationGetDto> readAllProposal(
-            Long itemId, String writer, String password,
+            Long itemId,
             Integer pageNum, Integer pageSize
     ){
+
+        String username = userUtils.getCurrentUser().getUsername();
+        String password = userUtils.getPassword();
+
         //대상 물품의 Entity 찾기
         Optional<ItemEntity> optionalItem = itemRepository.findById(itemId);
         if (optionalItem.isEmpty())
@@ -66,15 +80,17 @@ public class NegotiationService {
         ItemEntity item = optionalItem.get();
 
         //물품 주인의 작성자, 비밀번호 확인
-        if (item.getWriter().equals(writer) && item.getPassword().equals(password)){
+        if (username.equals(item.getUser().getUsername()) &&
+                password.equals(item.getUser().getPassword())){
             //물품 주인은 itemId에 대한 모든 구매 제안 조회 / 페이지 단위 조회
             return negotiationRepository.findAllByItemId(itemId, pageable).map(NegotiationGetDto::fromEntity);
 
         }
+
         else {
             //제안 등록한 사용자는 itemId에 대한 자신의 구매제안 조회/ 페이지 단위 조회
             //작성자, 비밀번호 확인
-            return negotiationRepository.findAllByItemIdAndWriterAndPassword(itemId, writer, password, pageable)
+            return negotiationRepository.findAllByItemIdAndUser_UsernameAndUser_Password(itemId, username, password, pageable)
                     .map(NegotiationGetDto::fromEntity);
         }
 
@@ -97,7 +113,8 @@ public class NegotiationService {
             throw new ResponseStatusException(HttpStatus.BAD_REQUEST);
 
         //작성자, 비밀번호 확인
-        if (!negotiation.getWriter().equals(dto.getWriter()) || !negotiation.getPassword().equals(dto.getPassword()))
+        if (!userUtils.getPassword().equals(negotiation.getUser().getPassword())
+                || !userUtils.getCurrentUser().getUsername().equals(negotiation.getUser().getUsername()))
             throw new ResponseStatusException(HttpStatus.BAD_REQUEST);
 
         //수정 가격만 수정
@@ -120,11 +137,14 @@ public class NegotiationService {
             throw new ResponseStatusException(HttpStatus.BAD_REQUEST);
 
         //작성자, 비밀번호 확인
-        if (!negotiation.getWriter().equals(dto.getWriter()) || !negotiation.getPassword().equals(dto.getPassword()))
+        if (!userUtils.getPassword().equals(negotiation.getUser().getPassword())
+                || !userUtils.getCurrentUser().getUsername().equals(negotiation.getUser().getUsername()))
             throw new ResponseStatusException(HttpStatus.BAD_REQUEST);
+
 
         //연관관계 삭제 후 negotiation삭제
         negotiation.setItem(null);
+        negotiation.setUser(null);
         negotiationRepository.deleteById(proposalId);
 
     }
@@ -151,7 +171,9 @@ public class NegotiationService {
 
         //대상 물품의 주인 작성자, 비밀번호 확인
         ItemEntity item = optionalItem.get();
-        if (!item.getWriter().equals(dto.getWriter()) || !item.getPassword().equals(dto.getPassword()))
+        //작성자, 비밀번호 확인
+        if (!userUtils.getPassword().equals(item.getUser().getPassword())
+                || !userUtils.getCurrentUser().getUsername().equals(item.getUser().getUsername()))
             throw new ResponseStatusException(HttpStatus.BAD_REQUEST);
 
         //제안의 상태 변경
@@ -178,7 +200,9 @@ public class NegotiationService {
             throw new ResponseStatusException(HttpStatus.BAD_REQUEST);
 
         //구매제안 등록자의 작성자와 비밀번호 확인
-        if (!negotiation.getWriter().equals(dto.getWriter()) || !negotiation.getPassword().equals(dto.getPassword()))
+        //작성자, 비밀번호 확인
+        if (!userUtils.getPassword().equals(negotiation.getUser().getPassword())
+                || !userUtils.getCurrentUser().getUsername().equals(negotiation.getUser().getUsername()))
             throw new ResponseStatusException(HttpStatus.BAD_REQUEST);
 
         //제안의 상태가 수락이 아닐 경우 실패

@@ -6,8 +6,10 @@ import com.example.mutsamarket.dto.comment.CommentGetDto;
 import com.example.mutsamarket.dto.comment.CommentReplyDto;
 import com.example.mutsamarket.entity.CommentEntity;
 import com.example.mutsamarket.entity.ItemEntity;
+import com.example.mutsamarket.entity.UserEntity;
 import com.example.mutsamarket.repository.CommentRepository;
 import com.example.mutsamarket.repository.ItemRepository;
+import com.example.mutsamarket.repository.UserRepository;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.data.domain.Page;
@@ -26,6 +28,8 @@ import java.util.Optional;
 public class CommentService {
     private final CommentRepository commentRepository;
     private final ItemRepository itemRepository;
+    private final UserUtils userUtils;
+    private final UserRepository userRepository;
 
     //댓글 등록
     public CommentDto createComment(Long itemId, CommentDto commentDto){
@@ -36,8 +40,12 @@ public class CommentService {
 
         CommentEntity comment = new CommentEntity();
         comment.setItem(optionalItem.get());
-        comment.setWriter(commentDto.getWriter());
-        comment.setPassword(commentDto.getPassword());
+
+        //현재 인증정보로 userRepository에 저장된 userEntity 가져오기
+        UserEntity userEntity = userUtils.getUserEntity(userRepository).orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND));
+        //userEntity등록
+        comment.setUser(userEntity);
+
         comment.setContent(commentDto.getContent());
         comment.setReply(commentDto.getReply());
         return CommentDto.fromEntity(commentRepository.save(comment));
@@ -56,6 +64,7 @@ public class CommentService {
     public CommentDto updateComment(Long itemId, Long commentId, CommentDto dto){
 
         Optional<CommentEntity> optionalComment = commentRepository.findById(commentId);
+
         //commentId가 존재하는지 확인
         if (optionalComment.isEmpty())
             throw new ResponseStatusException(HttpStatus.NOT_FOUND);
@@ -66,7 +75,8 @@ public class CommentService {
             throw new ResponseStatusException(HttpStatus.BAD_REQUEST);
 
         //댓글 비밀번호 확인
-        if (!comment.getPassword().equals(dto.getPassword()))
+        // 비밀번호 확인 둘다 암호화된 비밀번호
+        if (!userUtils.getPassword().equals(comment.getUser().getPassword()))
             throw new ResponseStatusException(HttpStatus.BAD_REQUEST);
 
         comment.setWriter(dto.getWriter());
@@ -93,8 +103,9 @@ public class CommentService {
 
         ItemEntity item = optionalItem.get();
         // 물품 등록한 사람 => 비밀번호 확인
-        if (!item.getPassword().equals(dto.getPassword()))
+        if (!userUtils.getPassword().equals(item.getUser().getPassword()))
             throw new ResponseStatusException(HttpStatus.BAD_REQUEST);
+
         comment.setReply(dto.getReply());
 
         return CommentDto.fromEntity(commentRepository.save(comment));
@@ -114,12 +125,13 @@ public class CommentService {
             throw new ResponseStatusException(HttpStatus.BAD_REQUEST);
 
         //비밀번호확인
-        if (!comment.getPassword().equals(dto.getPassword()))
+        if (!userUtils.getPassword().equals(comment.getUser().getPassword()))
             throw new ResponseStatusException(HttpStatus.BAD_REQUEST);
 
         //삭제한다.
         //연관관계 삭제 후 comment삭제
         comment.setItem(null);
+        comment.setUser(null);
         commentRepository.deleteById(commentId);
 
     }

@@ -34,18 +34,16 @@ public class NegotiationController {
     }
 
     //구매제안 조회
-    //GET /items/{itemId}/proposals?writer=jeeho.edu&password=qwerty1234&page=1
+    //GET /items/{itemId}/proposals?page=1
     //반환값 Page<NegotiationGetDto>
     @GetMapping
     public ResponseEntity<Page<NegotiationGetDto>> readAll(
             @PathVariable("itemId") Long itemId,
-            @RequestParam("writer") String writer,
-            @RequestParam("password") String password,
             @RequestParam(value = "page", defaultValue = "0") Integer page,
             @RequestParam(value = "limit", defaultValue = "20") Integer limit
     ) {
         return ResponseEntity
-                .ok(this.service.readAllProposal(itemId, writer, password, page, limit));
+                .ok(this.service.readAllProposal(itemId, page, limit));
     }
 
     //구매제안 수정

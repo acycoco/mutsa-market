@@ -124,7 +124,7 @@ public class NegotiationService {
 
     //구매제안 삭제
     //작성자, 비밀번호 확인
-    public void deleteProposal(Long itemId, Long proposalId, DeleteDto dto){
+    public void deleteProposal(Long itemId, Long proposalId){
 
         //NegotiationEntity확인
         Optional<NegotiationEntity> optionalNegotiation = negotiationRepository.findById(proposalId);

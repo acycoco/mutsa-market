@@ -72,9 +72,9 @@ public class NegotiationController {
     public ResponseEntity<ResponseDto> delete(
             @PathVariable("itemId") Long itemId,
             @PathVariable("proposalId") Long proposalId,
-            @Valid @RequestBody DeleteDto deleteDto
+            @Valid @RequestBody(required = false) DeleteDto deleteDto
     ) {
-        this.service.deleteProposal(itemId, proposalId, deleteDto);
+        this.service.deleteProposal(itemId, proposalId);
         ResponseDto response = new ResponseDto();
         response.setMessage("제안을 삭제했습니다.");
         return ResponseEntity

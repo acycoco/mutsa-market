@@ -3,6 +3,7 @@ package com.example.mutsamarket.controller;
 import com.example.mutsamarket.dto.jwt.JwtRequestDto;
 import com.example.mutsamarket.dto.jwt.JwtTokenDto;
 import com.example.mutsamarket.service.TokenService;
+import jakarta.validation.Valid;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -23,7 +24,7 @@ public class TokenController {
     //jwt 발급
     @PostMapping("/issue")
     public ResponseEntity<JwtTokenDto> issue(
-            @RequestBody JwtRequestDto dto
+            @Valid @RequestBody JwtRequestDto dto
     ){
         JwtTokenDto response = tokenService.issueJwt(dto);
 

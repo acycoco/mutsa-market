@@ -97,7 +97,6 @@ public class ItemService {
         item.setImageUrl(dto.getImageUrl());
         item.setMinPriceWanted(dto.getMinPriceWanted());
         item.setStatus(dto.getStatus());
-        item.setWriter(dto.getWriter());
 
         //비밀번호는 수정하려는 본인이 맞는 지 확인하려는 용도
         return ItemDto.fromEntity(repository.save(item));

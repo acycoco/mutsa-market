@@ -79,7 +79,7 @@ public class CommentService {
         if (!userUtils.getPassword().equals(comment.getUser().getPassword()))
             throw new ResponseStatusException(HttpStatus.BAD_REQUEST);
 
-        comment.setWriter(dto.getWriter());
+        //내용만 바꿈
         comment.setContent(dto.getContent());
 
         return CommentDto.fromEntity(commentRepository.save(comment));

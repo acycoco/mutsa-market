@@ -39,7 +39,7 @@ public class JwtTokenFilter extends OncePerRequestFilter {
 
                      SecurityContext context = SecurityContextHolder.createEmptyContext();
                      String username = jWtTokenUtils.parseClaims(jwt).getSubject();
-                     //TODO 권한 관련해서 설정
+
                      //사용자 인증정보 설정
                      AbstractAuthenticationToken authenticationToken
                              = new UsernamePasswordAuthenticationToken(

@@ -12,7 +12,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.provisioning.UserDetailsManager;
 import org.springframework.web.bind.annotation.*;
-
+import jakarta.validation.Valid;
 
 @Slf4j
 @RestController
@@ -21,7 +21,6 @@ public class UserController {
     private final UserDetailsManager manager;
     private final PasswordEncoder passwordEncoder;
     private final UserUtils userUtils;
-
 
     public UserController(UserDetailsManager manager, PasswordEncoder passwordEncoder, UserUtils userUtils) {
         this.manager = manager;
@@ -32,6 +31,7 @@ public class UserController {
     //회원가입
     @PostMapping("/register")
     public ResponseEntity<ResponseDto> registerUser(
+            @Valid
             @RequestBody UserRegisterDto dto
             ){
         //비밀번호, 비밀번호 확인 비교
@@ -62,6 +62,7 @@ public class UserController {
     //회원정보 수정
     @PutMapping("/update")
     public ResponseEntity<ResponseDto> updateUser(
+            @Valid
             @RequestBody UserRequestDto userRequestDto
     ){
 
@@ -76,7 +77,7 @@ public class UserController {
         //사용자 정보 업데이트
         manager.updateUser(
                 CustomUserDetails.builder()
-                        .username(userRequestDto.getUsername())
+                        .username(userUtils.getCurrentUser().getUsername())
                         .password(passwordEncoder.encode(userRequestDto.getPassword()))
                         .phone(userRequestDto.getPhone())
                         .email(userRequestDto.getEmail())
@@ -91,6 +92,7 @@ public class UserController {
 
     @PutMapping("/changePassword")
     public ResponseEntity<ResponseDto> changePassword(
+            @Valid
             @RequestBody UserChangePasswordDto dto
             ){
 
@@ -105,6 +107,7 @@ public class UserController {
     //회원탈퇴
     @DeleteMapping("/delete")
     public ResponseEntity<ResponseDto> deleteUser(
+            @Valid
             @RequestBody UserDeleteDto dto
             ){
 

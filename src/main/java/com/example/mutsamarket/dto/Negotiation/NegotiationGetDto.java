@@ -12,12 +12,16 @@ public class NegotiationGetDto {
 
     private String status;
 
+    private String username;
 
     public static NegotiationGetDto fromEntity(NegotiationEntity entity){
         NegotiationGetDto dto = new NegotiationGetDto();
         dto.setId(entity.getId());
         dto.setSuggestedPrice(entity.getSuggestedPrice());
         dto.setStatus(entity.getStatus());
+        if (entity.getUser() != null){
+            dto.setUsername(entity.getUser().getUsername());
+        }
         return dto;
     }
 }

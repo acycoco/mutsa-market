@@ -38,6 +38,7 @@ public class ItemDto {
         dto.setStatus(entity.getStatus());
         dto.setWriter(entity.getWriter());
         dto.setPassword(entity.getPassword());
+
         return dto;
     }
 }

@@ -71,27 +71,25 @@ public class ItemController {
 
     //물품 이미지 수정
     //PUT /items/{itemId}/image
-
     @PutMapping(value = "/{itemId}/image",
             consumes = MediaType.MULTIPART_FORM_DATA_VALUE
     )
     public ResponseEntity<ResponseDto> updateImage(
             @PathVariable("itemId") Long itemId,
-            @RequestParam("image") MultipartFile image,
-            @RequestParam("writer") String writer,
-            @RequestParam("password") String password
+            @RequestParam("image") MultipartFile image
     ){
-        this.service.updateItemImage(itemId, image, writer, password);
+        this.service.updateItemImage(itemId, image);
         ResponseDto response = new ResponseDto();
         response.setMessage("이미지가 등록되었습니다.");
         return ResponseEntity
                 .ok(response);
     }
+
     //물품 삭제
     // DELETE /items/{itemId}
     //유효성 검증 DeleteDto
     @DeleteMapping("/{itemId}")
-    public ResponseEntity<ResponseDto> delete(@PathVariable("itemId") Long itemId, @Valid @RequestBody DeleteDto deleteDto){
+    public ResponseEntity<ResponseDto> delete(@PathVariable("itemId") Long itemId, @RequestBody(required = false) DeleteDto deleteDto){
         this.service.deleteItem(itemId, deleteDto);
         ResponseDto response = new ResponseDto();
         response.setMessage("물품을 삭제했습니다.");

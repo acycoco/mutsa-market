@@ -6,15 +6,13 @@ import com.example.mutsamarket.dto.user.UserDeleteDto;
 import com.example.mutsamarket.dto.user.UserRegisterDto;
 import com.example.mutsamarket.dto.user.UserRequestDto;
 import com.example.mutsamarket.entity.CustomUserDetails;
-import com.example.mutsamarket.service.UserService;
+import com.example.mutsamarket.service.UserUtils;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.ResponseEntity;
-import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.provisioning.UserDetailsManager;
 import org.springframework.web.bind.annotation.*;
 
-import static com.example.mutsamarket.config.UserUtils.getCurrentUser;
 
 @Slf4j
 @RestController
@@ -22,13 +20,13 @@ import static com.example.mutsamarket.config.UserUtils.getCurrentUser;
 public class UserController {
     private final UserDetailsManager manager;
     private final PasswordEncoder passwordEncoder;
-    private final UserService userService;
+    private final UserUtils userUtils;
 
 
-    public UserController(UserDetailsManager manager, PasswordEncoder passwordEncoder, UserService userService) {
+    public UserController(UserDetailsManager manager, PasswordEncoder passwordEncoder, UserUtils userUtils) {
         this.manager = manager;
         this.passwordEncoder = passwordEncoder;
-        this.userService = userService;
+        this.userUtils = userUtils;
     }
 
     //회원가입
@@ -68,7 +66,7 @@ public class UserController {
     ){
 
         //비밀번호 검증
-        if (!userService.checkPassword(userRequestDto.getPassword())) {
+        if (!userUtils.checkPassword(userRequestDto.getPassword())) {
             log.warn("password does not match.");
             ResponseDto response = new ResponseDto();
             response.setMessage("현재 비밀번호가 일치하지 않습니다.");
@@ -111,7 +109,7 @@ public class UserController {
             ){
 
         //비밀번호 검증
-        if (!userService.checkPassword(dto.getPassword())) {
+        if (!userUtils.checkPassword(dto.getPassword())) {
             log.warn("password does not match.");
             ResponseDto response = new ResponseDto();
             response.setMessage("현재 비밀번호가 일치하지 않습니다.");
@@ -119,7 +117,7 @@ public class UserController {
         }
 
         //회원 탈퇴
-        manager.deleteUser(getCurrentUser().getUsername());
+        manager.deleteUser(userUtils.getCurrentUser().getUsername());
         ResponseDto response = new ResponseDto();
         response.setMessage("회원탈퇴가 완료되었습니다. ");
         return ResponseEntity.ok(response);
